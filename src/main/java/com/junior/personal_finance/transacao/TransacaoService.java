@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.junior.personal_finance.categoria.Categoria;
 import com.junior.personal_finance.categoria.CategoriaRepository;
+import com.junior.personal_finance.enums.TipoTransacao;
 import com.junior.personal_finance.exceptions.RecursosNaoEncontradosException;
 
 @Service
@@ -67,6 +68,20 @@ public class TransacaoService {
                 transacaoSalva.getTipo(),
                 transacaoSalva.getCategoria() != null ? transacaoSalva.getCategoria().getNome() : null
             );
+    }
+    public double calcularSaldo() {
+        List<Transacao> listaReceitas = transacaoRepository.findByTipo(TipoTransacao.RECEITA);
+        List<Transacao> listaDespesas = transacaoRepository.findByTipo(TipoTransacao.DESPESA);
+        double totalReceitas = listaReceitas.stream()
+        .mapToDouble(t -> t.getValor())
+        .sum();
+        double totalDespesas = listaDespesas.stream()
+        .mapToDouble(d -> d.getValor())
+        .sum();
+
+        double saldo = totalReceitas - totalDespesas;
+
+        return saldo;
     }
 
     public TransacaoResponse salvar(TransacaoRequest transacao) {

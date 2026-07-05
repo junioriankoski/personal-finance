@@ -29,6 +29,11 @@ public class TransacaoController {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
+    @GetMapping("/transacoes/saldo")
+    public double getSaldo() {
+        return service.calcularSaldo();
+    }
+
     @PostMapping("/transacoes")
     public ResponseEntity<TransacaoResponse> adicionarTransacao(@RequestBody TransacaoRequest transacao){
         return ResponseEntity.ok(service.salvar(transacao));
