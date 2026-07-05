@@ -68,4 +68,33 @@ public class TransacaoService {
                 transacaoSalva.getCategoria() != null ? transacaoSalva.getCategoria().getNome() : null
             );
     }
+
+    public TransacaoResponse salvar(TransacaoRequest transacao) {
+        Categoria categoria = categoriaRepository.findById(transacao.getCategoriaId())
+            .orElseThrow(() -> new RecursosNaoEncontradosException("Categoria não encontrada."));
+        Transacao novaTransacao = new Transacao(
+            transacao.getDescricao(),
+            transacao.getValor(),
+            transacao.getData(),
+            transacao.getTipo()
+        );
+        novaTransacao.setCategoria(categoria);
+        Transacao transacaoSalva = transacaoRepository.save(novaTransacao);
+        return new TransacaoResponse(
+            transacaoSalva.getId(),
+            transacaoSalva.getDescricao(),
+            transacaoSalva.getValor(),
+            transacaoSalva.getData(),
+            transacaoSalva.getTipo(),
+            transacaoSalva.getCategoria() != null ? transacaoSalva.getCategoria().getNome() : null
+        );
+    }
+
+    public Boolean deletarPorId(Long id) {
+        if (!transacaoRepository.existsById(id)){
+            return false;
+        }
+        transacaoRepository.deleteById(id);
+        return true;
+    }
 }
