@@ -84,6 +84,22 @@ public class TransacaoService {
         return saldo;
     }
 
+    public List<ResumoCategoria> resumoPorCategoria() {
+        List<Categoria> categorias = categoriaRepository.findAll();
+        return categorias.stream()
+        .map(categoria -> {
+           double total = transacaoRepository.findByCategoria(categoria)
+            .stream()
+            .mapToDouble(t -> t.getValor())
+            .sum();
+        return new ResumoCategoria(
+            categoria.getNome(),
+            total
+            );
+        })
+        .toList();
+    }
+
     public TransacaoResponse salvar(TransacaoRequest transacao) {
         Categoria categoria = categoriaRepository.findById(transacao.getCategoriaId())
             .orElseThrow(() -> new RecursosNaoEncontradosException("Categoria não encontrada."));
