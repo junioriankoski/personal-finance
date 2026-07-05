@@ -21,7 +21,8 @@ public class CategoriaService {
             categoria.getId(),
             categoria.getNome(),
             categoria.getTipo()
-        )).toList();
+        ))
+        .toList();
     }
 
     public CategoriaResponse buscarPorId(Long id) {

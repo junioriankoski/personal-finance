@@ -74,4 +74,12 @@ public class Transacao {
     public void setTipo(TipoTransacao tipo) {
         this.tipo = tipo;
     }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 }
