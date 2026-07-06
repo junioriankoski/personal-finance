@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -37,6 +39,11 @@ public class TransacaoController {
     @GetMapping("/transacoes/categorias")
     public List<ResumoCategoria> getCategoriasTotal() {
         return service.resumoPorCategoria();
+    }
+
+    @GetMapping("/transacoes/periodo")
+    public List<TransacaoResponse> getPorPeriodo(@RequestParam LocalDate inicio, @RequestParam LocalDate fim) {
+        return service.filtroPorPeriodo(inicio, fim);
     }
 
     @PostMapping("/transacoes")

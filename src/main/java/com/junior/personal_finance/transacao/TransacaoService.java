@@ -1,5 +1,6 @@
 package com.junior.personal_finance.transacao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -97,6 +98,20 @@ public class TransacaoService {
             total
             );
         })
+        .toList();
+    }
+
+    public List<TransacaoResponse> filtroPorPeriodo(LocalDate inicio, LocalDate fim) {
+        return transacaoRepository.findByDataBetween(inicio, fim)
+        .stream()
+        .map(transacao -> new TransacaoResponse(
+            transacao.getId(),
+            transacao.getDescricao(),
+            transacao.getValor(),
+            transacao.getData(),
+            transacao.getTipo(),
+            transacao.getCategoria() != null ? transacao.getCategoria().getNome() : null
+        ))
         .toList();
     }
 
