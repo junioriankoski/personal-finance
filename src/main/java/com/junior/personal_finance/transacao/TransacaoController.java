@@ -33,6 +33,11 @@ public class TransacaoController {
     public double getSaldo() {
         return service.calcularSaldo();
     }
+    
+    @GetMapping("/transacoes/categorias")
+    public List<ResumoCategoria> getCategoriasTotal() {
+        return service.resumoPorCategoria();
+    }
 
     @PostMapping("/transacoes")
     public ResponseEntity<TransacaoResponse> adicionarTransacao(@RequestBody TransacaoRequest transacao){
