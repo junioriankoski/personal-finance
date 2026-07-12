@@ -40,7 +40,10 @@ public class TransacaoService {
     }
 
     public TransacaoResponse buscarPorId(Long id) {
-        Transacao transacao = transacaoRepository.findById(id)
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder .getContext()
+            .getAuthentication()
+            .getPrincipal();
+        Transacao transacao = transacaoRepository.findByIdAndUsuario(id, usuarioLogado)
             .orElseThrow(() -> new RecursosNaoEncontradosException("Transação não encontrada."));
         
         return new TransacaoResponse(
@@ -54,7 +57,10 @@ public class TransacaoService {
     }
 
     public TransacaoResponse atualizarTransacao(TransacaoRequest transacaoAtualziada, Long id) {
-        Transacao transacao = transacaoRepository.findById(id)
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder .getContext()
+            .getAuthentication()
+            .getPrincipal();
+        Transacao transacao = transacaoRepository.findByIdAndUsuario(id, usuarioLogado)
             .orElseThrow(() -> new RecursosNaoEncontradosException("Transação não encontrada."));
         Categoria categoria = categoriaRepository.findById(transacaoAtualziada.getCategoriaId())
             .orElseThrow(() -> new RecursosNaoEncontradosException("Categoria não encontrada."));
@@ -155,10 +161,17 @@ public class TransacaoService {
     }
 
     public Boolean deletarPorId(Long id) {
-        if (!transacaoRepository.existsById(id)){
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder .getContext()
+            .getAuthentication()
+            .getPrincipal();
+        
+        Transacao transacao = transacaoRepository.findByIdAndUsuario(id, usuarioLogado)
+            .orElse(null);
+            
+        if (transacao == null){
             return false;
         }
-        transacaoRepository.deleteById(id);
+        transacaoRepository.delete(transacao);
         return true;
     }
 }
