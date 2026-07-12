@@ -76,8 +76,11 @@ public class TransacaoService {
             );
     }
     public double calcularSaldo() {
-        List<Transacao> listaReceitas = transacaoRepository.findByTipo(TipoTransacao.RECEITA);
-        List<Transacao> listaDespesas = transacaoRepository.findByTipo(TipoTransacao.DESPESA);
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder .getContext()
+            .getAuthentication()
+            .getPrincipal();
+        List<Transacao> listaReceitas = transacaoRepository.findByTipoAndUsuario(TipoTransacao.RECEITA, usuarioLogado);
+        List<Transacao> listaDespesas = transacaoRepository.findByTipoAndUsuario(TipoTransacao.DESPESA, usuarioLogado);
         double totalReceitas = listaReceitas.stream()
         .mapToDouble(t -> t.getValor())
         .sum();
@@ -91,10 +94,13 @@ public class TransacaoService {
     }
 
     public List<ResumoCategoria> resumoPorCategoria() {
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder .getContext()
+            .getAuthentication()
+            .getPrincipal();
         List<Categoria> categorias = categoriaRepository.findAll();
         return categorias.stream()
         .map(categoria -> {
-           double total = transacaoRepository.findByCategoria(categoria)
+           double total = transacaoRepository.findByCategoriaAndUsuario(categoria, usuarioLogado)
             .stream()
             .mapToDouble(t -> t.getValor())
             .sum();
@@ -107,7 +113,10 @@ public class TransacaoService {
     }
 
     public List<TransacaoResponse> filtroPorPeriodo(LocalDate inicio, LocalDate fim) {
-        return transacaoRepository.findByDataBetween(inicio, fim)
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder .getContext()
+            .getAuthentication()
+            .getPrincipal();
+        return transacaoRepository.findByDataBetweenAndUsuario(inicio, fim, usuarioLogado)
         .stream()
         .map(transacao -> new TransacaoResponse(
             transacao.getId(),

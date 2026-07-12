@@ -13,7 +13,8 @@ import com.junior.personal_finance.auth.Usuario;
 public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
     List<Transacao> findAllByOrderByIdAsc();
     List<Transacao> findByTipo(TipoTransacao tipo);
-    List<Transacao> findByCategoria(Categoria categoria);
-    List<Transacao> findByDataBetween(LocalDate inicio, LocalDate fim);
+    List<Transacao> findByCategoriaAndUsuario(Categoria categoria, Usuario usuario);
+    List<Transacao> findByDataBetweenAndUsuario(LocalDate inicio, LocalDate fim, Usuario usuario);
     List<Transacao> findByUsuario(Usuario usuario);
+    List<Transacao> findByTipoAndUsuario(TipoTransacao tipo, Usuario usuario);
 }
