@@ -7,10 +7,13 @@ import com.junior.personal_finance.enums.TipoTransacao;
 
 import java.time.LocalDate;
 import java.util.List;
+import com.junior.personal_finance.auth.Usuario;
+
 
 public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
     List<Transacao> findAllByOrderByIdAsc();
     List<Transacao> findByTipo(TipoTransacao tipo);
     List<Transacao> findByCategoria(Categoria categoria);
     List<Transacao> findByDataBetween(LocalDate inicio, LocalDate fim);
+    List<Transacao> findByUsuario(Usuario usuario);
 }

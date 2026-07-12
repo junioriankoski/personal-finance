@@ -1,4 +1,5 @@
 package com.junior.personal_finance.transacao;
+import com.junior.personal_finance.auth.Usuario;
 import com.junior.personal_finance.categoria.Categoria;
 import com.junior.personal_finance.enums.TipoTransacao;
 
@@ -25,6 +26,10 @@ public class Transacao {
 
     @Enumerated(EnumType.STRING)
     private TipoTransacao tipo;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
@@ -81,5 +86,13 @@ public class Transacao {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

@@ -3,8 +3,10 @@ package com.junior.personal_finance.transacao;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.junior.personal_finance.auth.Usuario;
 import com.junior.personal_finance.categoria.Categoria;
 import com.junior.personal_finance.categoria.CategoriaRepository;
 import com.junior.personal_finance.enums.TipoTransacao;
@@ -21,7 +23,10 @@ public class TransacaoService {
     }
 
     public List<TransacaoResponse> listarTodas() {
-        return transacaoRepository.findAllByOrderByIdAsc()
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getPrincipal();
+        return transacaoRepository.findByUsuario(usuarioLogado)
         .stream()
         .map(transacao -> new TransacaoResponse(
             transacao.getId(),
@@ -116,6 +121,9 @@ public class TransacaoService {
     }
 
     public TransacaoResponse salvar(TransacaoRequest transacao) {
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getPrincipal();
         Categoria categoria = categoriaRepository.findById(transacao.getCategoriaId())
             .orElseThrow(() -> new RecursosNaoEncontradosException("Categoria não encontrada."));
         Transacao novaTransacao = new Transacao(
@@ -125,6 +133,7 @@ public class TransacaoService {
             transacao.getTipo()
         );
         novaTransacao.setCategoria(categoria);
+        novaTransacao.setUsuario(usuarioLogado);
         Transacao transacaoSalva = transacaoRepository.save(novaTransacao);
         return new TransacaoResponse(
             transacaoSalva.getId(),
