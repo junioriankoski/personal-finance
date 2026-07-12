@@ -3,6 +3,9 @@ package com.junior.personal_finance.auth;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -15,7 +18,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth/register")
-    public ResponseEntity<AuthResponse> registro(@RequestBody UsuarioRequest usuario) {
+    public ResponseEntity<AuthResponse> registro(@Valid @RequestBody UsuarioRequest usuario) {
         String token = service.registrar(usuario);
         return ResponseEntity.ok(new AuthResponse(token));
     }
