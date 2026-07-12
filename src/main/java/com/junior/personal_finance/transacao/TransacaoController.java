@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -47,12 +49,12 @@ public class TransacaoController {
     }
 
     @PostMapping("/transacoes")
-    public ResponseEntity<TransacaoResponse> adicionarTransacao(@RequestBody TransacaoRequest transacao){
+    public ResponseEntity<TransacaoResponse> adicionarTransacao(@Valid @RequestBody TransacaoRequest transacao){
         return ResponseEntity.ok(service.salvar(transacao));
     }
 
     @PutMapping("/transacoes/{id}")
-    public ResponseEntity<TransacaoResponse> atualizarTransacao(@RequestBody TransacaoRequest transacaoAtualizada, @PathVariable Long id) {
+    public ResponseEntity<TransacaoResponse> atualizarTransacao(@Valid @RequestBody TransacaoRequest transacaoAtualizada, @PathVariable Long id) {
         return ResponseEntity.ok(service.atualizarTransacao(transacaoAtualizada, id));
     }
 

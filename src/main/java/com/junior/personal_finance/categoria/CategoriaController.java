@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class CategoriaController {
     private CategoriaService service;
@@ -30,12 +32,12 @@ public class CategoriaController {
     }
 
     @PostMapping("/categorias")
-    public CategoriaResponse criarCategoria(@RequestBody CategoriaRequest categoria) {
+    public CategoriaResponse criarCategoria(@Valid @RequestBody CategoriaRequest categoria) {
         return service.salvar(categoria);
     }
 
     @PutMapping("/categorias/{id}")
-    public ResponseEntity<CategoriaResponse> atualizarCategoria(@RequestBody CategoriaRequest categoria, @PathVariable Long id) {
+    public ResponseEntity<CategoriaResponse> atualizarCategoria(@Valid @RequestBody CategoriaRequest categoria, @PathVariable Long id) {
         return ResponseEntity.ok(service.atualizarCategoria(categoria, id));
     }
 
