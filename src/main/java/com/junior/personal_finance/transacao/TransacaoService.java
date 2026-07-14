@@ -34,7 +34,8 @@ public class TransacaoService {
             transacao.getValor(),
             transacao.getData(),
             transacao.getTipo(),
-            transacao.getCategoria() != null ? transacao.getCategoria().getNome() : null
+            transacao.getCategoria() != null ? transacao.getCategoria().getNome() : null,
+            transacao.getCategoria() != null ? transacao.getCategoria().getId() : null
         ))
         .toList();
     }
@@ -52,7 +53,8 @@ public class TransacaoService {
             transacao.getValor(),
             transacao.getData(),
             transacao.getTipo(),
-            transacao.getCategoria() != null ? transacao.getCategoria().getNome() : null
+            transacao.getCategoria() != null ? transacao.getCategoria().getNome() : null,
+            transacao.getCategoria() != null ? transacao.getCategoria().getId() : null
         );
     }
 
@@ -78,7 +80,8 @@ public class TransacaoService {
                 transacaoSalva.getValor(),
                 transacaoSalva.getData(),
                 transacaoSalva.getTipo(),
-                transacaoSalva.getCategoria() != null ? transacaoSalva.getCategoria().getNome() : null
+                transacaoSalva.getCategoria() != null ? transacaoSalva.getCategoria().getNome() : null,
+                transacaoSalva.getCategoria() != null ? transacaoSalva.getCategoria().getId() : null
             );
     }
     public double calcularSaldo() {
@@ -130,7 +133,8 @@ public class TransacaoService {
             transacao.getValor(),
             transacao.getData(),
             transacao.getTipo(),
-            transacao.getCategoria() != null ? transacao.getCategoria().getNome() : null
+            transacao.getCategoria() != null ? transacao.getCategoria().getNome() : null,
+            transacao.getCategoria() != null ? transacao.getCategoria().getId() : null
         ))
         .toList();
     }
@@ -156,7 +160,8 @@ public class TransacaoService {
             transacaoSalva.getValor(),
             transacaoSalva.getData(),
             transacaoSalva.getTipo(),
-            transacaoSalva.getCategoria() != null ? transacaoSalva.getCategoria().getNome() : null
+            transacaoSalva.getCategoria() != null ? transacaoSalva.getCategoria().getNome() : null,
+            transacaoSalva.getCategoria() != null ? transacaoSalva.getCategoria().getId() : null
         );
     }
 

@@ -13,14 +13,16 @@ public class TransacaoResponse {
     private LocalDate data;
     private TipoTransacao tipo;
     private String categoriaNome;
+    private Long categoriaId;
 
-    public TransacaoResponse(Long id, String descricao, double valor, LocalDate data, TipoTransacao tipo, String categoriaNome) {
+    public TransacaoResponse(Long id, String descricao, double valor, LocalDate data, TipoTransacao tipo, String categoriaNome, Long categoriaId) {
         this.id = id;
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
         this.tipo = tipo;
         this.categoriaNome = categoriaNome;
+        this.categoriaId = categoriaId;
     }
 
     public Long getId() {
@@ -45,5 +47,9 @@ public class TransacaoResponse {
 
     public String getCategoriaNome() {
         return categoriaNome;
+    }
+
+    public Long getCategoriaId() {
+        return categoriaId;
     }
 }
