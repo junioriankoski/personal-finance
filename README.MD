@@ -57,9 +57,9 @@ The project follows a layered structure:
 
 `Set the following environment variables:`
 
-DATABASE_URL=jdbc:postgresql://host/dbname
-DATABASE_USERNAME=your_username
-DATABASE_PASSWORD=your_password
+- DATABASE_URL=jdbc:postgresql://host/dbname
+- DATABASE_USERNAME=your_username
+- DATABASE_PASSWORD=your_password
 
 Or create `src/main/resources/application-local.properties` for local development.
 
